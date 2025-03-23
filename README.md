@@ -67,7 +67,8 @@ pip install git+https://github.com/FAkohoue/num2hap.git
 ```
 ## ** Usage **
 ```python
-from num2hap import process_numeric_to_hapmap
+import num2hap
+from num2hap.converter import process_numeric_to_hapmap
 
 process_numeric_to_hapmap(
     input_file="Input_numeric_genotype.csv",
