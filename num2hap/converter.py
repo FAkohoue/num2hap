@@ -169,7 +169,6 @@ def process_numeric_to_hapmap(input_file, output_file, format_type="012", chunk_
         error_msg = (
             f"🚨 Format mismatch! Input data contains values inconsistent with `format_type='{format_type}'.\n"
             "Affected SNPs and invalid values:\n" +
-            "\n".join([f"- {snp}: {', '.join(map(str, vals))}" for snp, vals in invalid_snps]) +
             "\n\n🛠️ Fix: Ensure your data matches the specified format or adjust `format_type`."
         )
         raise ValueError(error_msg)
