@@ -60,7 +60,14 @@ This function is essential for **GWAS, genomic selection, and population structu
 data must be in HapMap format for compatibility with genetic tools.
 
 """
-
+## Usage
+process_numeric_to_hapmap(
+        input_file="/path_to_/Input_file.csv",
+        output_file="/path_to_/Output_file.csv",
+        format_type="012",  # Change to "-101" if needed
+        chunk_size=100, # Change if needed
+        num_processes=10 # Change if needed
+    )
 ## Installation
 
 To install from GitHub:
