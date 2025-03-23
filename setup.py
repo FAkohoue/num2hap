@@ -12,8 +12,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "pandas",
-        "tqdm",
-        "functools"
+        "tqdm"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
