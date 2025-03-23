@@ -143,7 +143,37 @@ def process_numeric_to_hapmap(input_file, output_file, format_type="012", chunk_
     required_columns = ["SNP", "CHR", "POS", "REF", "ALT"]
     if genotype_data.columns.tolist()[:5] != required_columns:
         raise ValueError(f"Input file must have the first five columns as: {required_columns}")
+        
+    # Validate format_type and check for invalid genotype values
+    allowed_values = {
+        "012": {0, 1, 2, -9},
+        "-101": {-1, 0, 1, -9}
+    }
+    if format_type not in allowed_values:
+        raise ValueError(f"Invalid format_type: {format_type}. Choose '012' or '-101'.")
     
+    genotype_columns = genotype_data.columns[5:]
+    invalid_snps = []
+    
+    for idx, row in genotype_data.iterrows():
+        snp_name = row['SNP']
+        genotypes = row[genotype_columns]
+        
+        # Check for invalid values
+        unique_vals = set(pd.to_numeric(genotypes, errors='coerce').unique())
+        invalid_vals = {v for v in unique_vals if v not in allowed_values[format_type] and not np.isnan(v)}
+        if invalid_vals:
+            invalid_snps.append((snp_name, invalid_vals))
+    
+    if invalid_snps:
+        error_msg = (
+            f"🚨 Format mismatch! Input data contains values inconsistent with `format_type='{format_type}'.\n"
+            "Affected SNPs and invalid values:\n" +
+            "\n".join([f"- {snp}: {', '.join(map(str, vals))}" for snp, vals in invalid_snps]) +
+            "\n\n🛠️ Fix: Ensure your data matches the specified format or adjust `format_type`."
+        )
+        raise ValueError(error_msg)
+        
     # Split the data into chunks of rows for parallel processing
     chunks = [genotype_data.iloc[i:i + chunk_size] for i in range(0, len(genotype_data), chunk_size)]
     
