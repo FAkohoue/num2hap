@@ -32,9 +32,9 @@ Parameters:
         - Heterozygous (1) → `AT`
         - Homozygous alternate (2) → `TT`
     * `"-101"`:
-        - Homozygous reference (-1) → `AA`
+        - Homozygous reference (1) → `AA`
         - Heterozygous (0) → `AT`
-        - Homozygous alternate (1) → `TT`
+        - Homozygous alternate (-1) → `TT`
     * `"-9"`: Missing values
 - chunk_size (int, optional): Number of SNPs processed per batch. Default is **100**.
 - num_processes (int, optional): Number of parallel CPU cores to use. Default is **10**.
@@ -94,9 +94,9 @@ def process_row(row, format_type):
         }
     elif format_type == "-101":
         conversion_map = {
-            -1: ref_allele + ref_allele,
+            -1: alt_allele + alt_allele,
             0: ref_allele + alt_allele,
-            1: alt_allele + alt_allele,
+            1: ref_allele + ref_allele,
             -9: 'NA'
         }
     else:

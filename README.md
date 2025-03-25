@@ -33,9 +33,9 @@ This ensures that the original allele composition is preserved, making the data 
         - Heterozygous (1) → `AT`
         - Homozygous alternate (2) → `TT`
     * `"-101"`:
-        - Homozygous reference (-1) → `AA`
+        - Homozygous reference (1) → `AA`
         - Heterozygous (0) → `AT`
-        - Homozygous alternate (1) → `TT`
+        - Homozygous alternate (-1) → `TT`
     * `"-9"`: Missing values
 - chunk_size (int, optional): Number of SNPs processed per batch. Default is **100**.
 - num_processes (int, optional): Number of parallel CPU cores to use. Default is **10**.
